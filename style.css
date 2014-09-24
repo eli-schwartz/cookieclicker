@@ -55,7 +55,8 @@ body
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
-	-moz-user-select: moz-none;
+	-moz-user-select: -moz-none;
+	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 
@@ -89,7 +90,7 @@ a:active
 
 .inset
 {
-	box-shadow:0px 0px 12px #000 inset;
+	/*box-shadow:0px 0px 12px #000 inset;*/
 }
 
 .title,.section
@@ -225,7 +226,7 @@ a.option.warning:active
 	left:0px;
 	top:0px;
 }
-
+/*
 #backgroundLayer1
 {
 	background:url(img/bgBlue.jpg);
@@ -233,6 +234,13 @@ a.option.warning:active
 #backgroundLayer2
 {
 	background:#000 url(img/darkNoise.png);
+}
+*/
+#backgroundCanvas,#backgroundLeftCanvas
+{
+	position:absolute;
+	left:0px;
+	top:0px;
 }
 
 #topBar
@@ -376,6 +384,7 @@ a.option.warning:active
 	margin-top:8px;
 	font-style:italic;
 	opacity:0.7;
+	font-size:11px;
 }
 q:before
 {
@@ -434,48 +443,16 @@ q:after
 	position:absolute;
 	left:-128px;
 	top:-128px;
-	background:url(img/perfectCookie.png);
-	background-size:256px 256px;
+	/*background:url(img/perfectCookie.png);
+	background-size:256px 256px;*/
+	background:url(img/empty.png);/* somehow necessary; an empty div with no background seems to be click-through */
 	cursor:pointer;
-	z-index:10;
-	-webkit-transition: opacity 0.1s ease-out,-webkit-transform 0.1s ease-out;
-	-moz-transition: opacity 0.1s ease-out,-moz-transform 0.1s ease-out;
-	-ms-transition: opacity 0.1s ease-out,-ms-transform 0.1s ease-out;
-	-o-transition: opacity 0.1s ease-out,-o-transform 0.1s ease-out;
-	transition: opacity 0.1s ease-out,transform 0.1s ease-out;
+	z-index:10000;
 }
 .elderWrath #bigCookie
 {
 	background:url(img/imperfectCookie.png);
 	background-size:256px 256px;
-}
-#bigCookie:hover
-{
-	-webkit-transform:scale(1.05,1.05);opacity:0.9;
-	-moz-transform:scale(1.05,1.05);opacity:0.9;
-	-ms-transform:scale(1.05,1.05);opacity:0.9;
-	-o-transform:scale(1.05,1.05);opacity:0.9;
-	transform:scale(1.05,1.05);opacity:0.9;
-}
-#bigCookie:active
-{
-	-webkit-transform:scale(0.98,0.98);opacity:1;
-	-moz-transform:scale(0.98,0.98);opacity:1;
-	-ms-transform:scale(0.98,0.98);opacity:1;
-	-o-transform:scale(0.98,0.98);opacity:1;
-	transform:scale(0.98,0.98);opacity:1;
-}
-#cookieShine
-{
-	width:512px;
-	height:512px;
-	position:absolute;
-	left:-256px;
-	top:-256px;
-	background:url(img/shine.png);
-	background-size:100%;
-	z-index:5;
-	opacity:0.5;
 }
 #cookieNumbers{position:absolute;top:-80px;}
 .cookieNumber
@@ -647,18 +624,18 @@ q:after
 {
 	padding:0px 64px;
 }
-#commentsText q
+.commentsText q
 {
 	font-style:italic;
 }
-#commentsText sig
+.commentsText sig
 {
 	font-size:70%;
 	display:block;
 	text-align:center;
 	opacity:0.7;
 }
-#commentsText sig:before
+.commentsText sig:before
 {
 	content:"-";
 	padding-left:64px;
@@ -724,7 +701,6 @@ q:after
 }
 .row .specialButton
 {
-	visibility:hidden;
 	display:none;
 	position:absolute;
 	top:0px;
@@ -732,6 +708,25 @@ q:after
 	width:128px;
 	height:128px;
 	z-index:200000;
+}
+.row .specialButtonPic
+{
+	display:block;
+	width:100%;
+	height:100%;
+	background:transparent 0px 8px no-repeat;
+}
+.row .specialButtonText
+{
+	display:block;
+	position:absolute;
+	left:0px;
+	bottom:16px;
+	width:100%;
+	text-align:center;
+	text-shadow:0px 0px 4px #000;
+	font-weight:bold;
+	font-size:10px;
 }
 a.control
 {
@@ -753,8 +748,9 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 	left:0px;
 	top:0px;
 	overflow:hidden;
-	background:#000;
+	background:#00061b;
 }
+.map:after{content:'';pointer-events:none;display:block;position:absolute;left:0px;top:0px;width:144px;height:144px;z-index:100000;background:url(img/dungeonOverlay.png);}
 .map .tile, .map .thing
 {
 	width:16px;
@@ -763,10 +759,106 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 	left:0px;
 	top:0px;
 }
-.map .tile {background:url(img/mapTiles.png) no-repeat;z-index:100;}
-.map .thing {background:url(img/mapIcons.png) no-repeat;z-index:200;}
+.mapContainer
+{
+	/* meh. */
+	/*
+	-webkit-transition: top 0.1s ease-out, left 0.1s ease-out;
+	-moz-transition: top 0.1s ease-out, left 0.1s ease-out;
+	-ms-transition: top 0.1s ease-out, left 0.1s ease-out;
+	-o-transition: top 0.1s ease-out, left 0.1s ease-out;
+	transition: top 0.1s ease-out, left 0.1s ease-out;
+	*/
+}
+.map .tile {background:url(img/dungeonTiles.png) no-repeat;z-index:100;}
+.map .thing {background:url(img/dungeonIcons.png) no-repeat;z-index:200;}
+
+.dungeonName
+{
+	position:absolute;
+	top:24px;
+	left:-32px;
+	width:256px;
+	opacity:0.6;
+}
+.dungeonLog
+{
+	position:absolute;
+	right:0px;
+	top:0px;
+	width:200px;
+	height:100%;
+	overflow-y:scroll;
+	z-index:100;
+}
+.dungeonLog div
+{
+	font-size:10px;
+	padding:3px 2px;
+	opacity:0.6;
+	text-shadow:0px 1px 0px #000;
+}
+.dungeonLog div.new
+{
+	opacity:1;
+}
+.dungeonLog div b{font-weight:bold;}
+
+.mobSlot
+{
+	width:96px;
+	height:100%;
+	position:absolute;
+	left:0px;
+	bottom:0px;
+}
+.mobPic
+{
+	width:96px;
+	height:96px;
+	background:transparent center bottom no-repeat;
+	position:absolute;
+	left:0px;
+	bottom:32px;
+}
+.mobName
+{
+	position:absolute;
+	width:200%;
+	left:-50%;
+	bottom:16px;
+	text-align:center;
+	font-size:12px;
+}
+.hpBar
+{
+	position:absolute;
+	width:100%;
+	left:0px;
+	top:0px;
+	height:100%;
+	background:url(img/hpBar.png) repeat-x;
+	-webkit-transition: width 0.1s ease-out;
+	-moz-transition: width 0.1s ease-out;
+	-ms-transition: width 0.1s ease-out;
+	-o-transition: width 0.1s ease-out;
+	transition: width 0.1s ease-out;
+}
+.hpmBar
+{
+	position:absolute;
+	width:70%;
+	left:15%;
+	bottom:4px;
+	height:8px;
+	background:url(img/hpmBar.png) repeat-x;
+	box-shadow:0px 0px 4px #000;
+}
+
+.map .thing .mapInfo{display:none;position:absolute;left:0px;top:0px;z-index:1000000;background:#000;padding:4px 8px;}
+.map .thing:hover .mapInfo{display:block;}
 .special .fighter {position:absolute;width:96px;height:96px;}
-.row .info, #sectionLeft .info
+.row .info, #sectionLeft .info, .row .specialButton
 {
 	/*visibility:hidden;*/
 	-webkit-transition: opacity 0.1s ease-out;
@@ -775,17 +867,19 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 	-o-transition: opacity 0.1s ease-out;
 	transition: opacity 0.1s ease-out;
 	opacity:0;
+}
+.row .info, #sectionLeft .info
+{
 	position:absolute;
 	top:0px;
 	left:0px;
 	height:112px;
 	padding:8px;
-	z-index:100000;
 	font-size:12px;
 	line-height:125%;
 	background:url(img/infoBG.png);
 	color:#666;
-	box-shadow:0px 0px 4px #000;
+	z-index:100000;
 }
 .row .info:after
 {
@@ -808,7 +902,6 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 }
 .row:hover .info, #sectionLeft:hover .info, .row:hover .specialButton
 {
-	visibility:visible;
 	opacity:1;
 }
 .row .object
@@ -825,12 +918,19 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 	width:100%;
 }
 
-
-#storeTitle
+.zoneTitle
 {
 	text-align:center;
 	padding:8px;
+	width:100%;
+}
+#storeTitle
+{
 	width:284px;
+}
+#buildingsTitle
+{
+	display:none;
 }
 #upgrades
 {
@@ -876,7 +976,7 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 }
 .icon,.crate
 {
-	background-image:url(img/icons.png?v=1);
+	background-image:url(img/icons.png?v=8);
 }
 .achievement
 {
@@ -927,6 +1027,8 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 	position:absolute;
 	left:0px;
 	top:0px;
+	background-repeat:no-repeat;
+	margin:0px;
 }
 .product .content
 {
@@ -961,6 +1063,17 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 	display:none;
 }
 
+.seasonPopup
+{
+	width:256px;
+	height:256px;
+	background:url(img/goldCookie.png) center center no-repeat;
+	cursor:pointer;
+	position:absolute;
+	z-index:10000000000;
+	display:none;
+}
+
 #versionNumber
 {
 	position:absolute;
@@ -989,7 +1102,7 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 
 #support
 {
-	width:280px;
+	width:300px;
 	text-align:center;
 	margin:16px auto;
 }
@@ -1008,3 +1121,140 @@ a.control.middle{left:48px;top:48px;background-position:-48px -48px;}
 {
 	text-shadow:0px 0px 4px #000,0px 1px 0px #000!important;
 }
+
+/* mobile layout */
+.mobile #sectionLeft,.mobile #sectionMiddle,.mobile #sectionRight
+{
+	width:100%;
+	position:absolute;
+	left:0px;
+	top:128px;
+	right:0px;
+	bottom:64px;
+	display:none;
+}
+.mobile .separatorLeft,.mobile .separatorRight
+{display:none;}
+
+.mobile .focusLeft #sectionLeft{display:block;}
+.mobile .focusMiddle #sectionMiddle{display:block;}
+.mobile .focusRight #sectionRight{display:block;}
+.mobile .focusMenu #sectionMiddle{display:block;}
+.mobile #sectionMiddle
+{
+	margin:0px;
+	padding:0px;
+}
+.mobile #storeTitle,.mobile #upgrades
+{
+	width:100%;
+}
+.mobile .product
+{
+	width:100%;
+	background-size:100% 400%;
+}
+
+.mobile #game{top:0px;}
+.mobile #topBar,.mobile #versionNumber{display:none;}
+
+#focusButtons
+{
+	display:none;
+	position:fixed;
+	left:0px;
+	bottom:0px;
+	height:64px;
+	width:100%;
+	background:url(img/darkNoise.png);
+	z-index:1000000;
+	font-size:32px;
+}
+#focusButtons:before
+{
+	content:'';
+	display:block;
+	position:absolute;
+	left:0px;
+	top:-16px;
+	background:url(img/blackGradient.png) repeat-x bottom;
+	background-size:100% 100%;
+	width:100%;
+	height:16px;
+	opacity:0.5;
+	pointer-events:none;
+}
+#focusButtons div
+{
+	width:25%;
+	height:50%;
+	cursor:pointer;
+	float:left;
+	background:url(img/buttonTile.jpg);
+	background-size:100% 400%;
+	padding:16px 0px;
+	text-align:center;
+	opacity:0.5;
+}
+#focusButtons div:nth-child(4n-3) {background-position:0px 100%;}
+#focusButtons div:nth-child(4n-2) {background-position:0px 200%;}
+#focusButtons div:nth-child(4n-1) {background-position:0px 300%;}
+#focusButtons div:hover
+{
+	box-shadow:0px 0px 16px #fff inset,0px 0px 1px #000;
+	z-index:20;
+}
+#focusButtons div:active
+{
+	box-shadow:0px 0px 16px #000 inset;
+}
+.focusLeft #focusButtons #focusLeft,.focusMiddle #focusButtons #focusMiddle,.focusRight #focusButtons #focusRight,.focusMenu #focusButtons #focusMenu
+{
+	opacity:1;
+	z-index:20;
+	box-shadow:0px 0px 8px #fff;
+}
+
+#compactOverlay
+{
+	display:none;
+	position:fixed;
+	left:0px;
+	top:0px;
+	height:128px;
+	width:100%;
+	background:url(img/darkNoise.png);
+	z-index:1000000;
+	text-align:center;
+	font-size:16px;
+}
+#compactCommentsText
+{
+	padding:8px 0px;
+	opacity:0.8;
+	position:absolute;
+	width:100%;
+	text-align:center;
+	bottom:16px;
+	left:0px;
+}
+#compactCookies
+{
+	padding:8px 0px;
+	position:absolute;
+	width:100%;
+	height:32px;
+	top:0px;
+	left:0px;
+	font-size:24px;
+	text-shadow:0px 0px 12px rgba(255,255,255,0.5);
+	background:rgba(255,255,255,0.05);
+}
+
+.mobile .row {padding-bottom:16px;}
+
+.mobile #comments, .mobile #cookies {display:none;}
+.mobile #focusButtons, .mobile #compactOverlay/*, .mobile #buildingsTitle*/
+{display:block;}
+
+/**{overflow:hidden!important;}*/
