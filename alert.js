@@ -1,0 +1,1 @@
+alert("Hello! This is my school unblocked Cookie Clicker for you all to use. MAKE SURE TO SUSBSCRIBE TO OCEANTUBEZ ON YOUTUBE! (Also this was made by a Chinook Middle School Student)");
